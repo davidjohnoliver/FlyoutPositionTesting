@@ -1,13 +1,59 @@
-﻿<Page
-    x:Class="FlyoutPositionTesting.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FlyoutPositionTesting"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="FlyoutPositionTesting.MainPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:local="using:FlyoutPositionTesting"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:toolkit="using:Uno.UI.Toolkit"
+	  mc:Ignorable="d">
+	<Page.Resources>
+		<local:StringConverter x:Key="StringConverter" />
+	</Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<TextBlock Text="Hello, world!" Margin="20" FontSize="30" />
-    </Grid>
+	<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		  toolkit:VisibleBoundsPadding.PaddingMask="All">
+		<StackPanel Margin="150"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top">
+			<ComboBox x:Name="PlacementModeComboBox"
+					  Header="Set FlyoutPlacementMode">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Converter={StaticResource StringConverter}}" />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<ComboBox x:Name="HorizontalAlignmentComboBox"
+					  Header="Set target HorizontalAlignment">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Converter={StaticResource StringConverter}}" />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<ComboBox x:Name="VerticalAlignmentComboBox"
+					  Header="Set target VerticalAlignment">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Converter={StaticResource StringConverter}}" />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+		</StackPanel>
+		<Button x:Name="TargetButton"
+				HorizontalAlignment="{Binding ElementName=HorizontalAlignmentComboBox, Path=SelectedItem}"
+				VerticalAlignment="{Binding ElementName=VerticalAlignmentComboBox, Path=SelectedItem}"
+				Margin="10"
+				Width="160"
+				Height="40"
+				Content="Target button">
+			<Button.Flyout>
+				<Flyout Placement="{Binding ElementName=PlacementModeComboBox, Path=SelectedItem}">
+					<Border Width="60"
+							Height="60"
+							Background="Green" />
+				</Flyout>
+			</Button.Flyout>
+		</Button>
+	</Grid>
 </Page>

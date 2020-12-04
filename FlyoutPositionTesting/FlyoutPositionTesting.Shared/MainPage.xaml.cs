@@ -25,6 +25,18 @@ namespace FlyoutPositionTesting
 		public MainPage()
 		{
 			this.InitializeComponent();
+
+			PlacementModeComboBox.ItemsSource = GetEnumValues<FlyoutPlacementMode>();
+			PlacementModeComboBox.SelectedItem = FlyoutPlacementMode.Top;
+
+			HorizontalAlignmentComboBox.ItemsSource = GetEnumValues<HorizontalAlignment>();
+			HorizontalAlignmentComboBox.SelectedItem = HorizontalAlignment.Center;
+
+			VerticalAlignmentComboBox.ItemsSource = GetEnumValues<VerticalAlignment>();
+			VerticalAlignmentComboBox.SelectedItem = VerticalAlignment.Center;
 		}
+
+		private T[] GetEnumValues<T>() where T : Enum => Enum.GetValues(typeof(T)).Cast<T>().ToArray();
+
 	}
 }
